@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Smart-Shop | Live Price Comparison</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">Smart<span>-Shop</span></div>
+  <div class="status {% if live_enabled %}live{% endif %}">
+    {% if live_enabled %}● LIVE SEARCH ENABLED{% else %}● LIVE API KEY REQUIRED{% endif %}
+  </div>
+</header>
+
+<main class="container">
+  <section class="hero">
+    <p class="eyebrow">LIVE PRICE COMPARISON</p>
+    <h1>Search <span>any product</span></h1>
+    <p class="sub">No fixed 9-product list. Enter any product and fetch current shopping results.</p>
+
+    <form id="searchForm" class="searchbox">
+      <input id="query" autocomplete="off" placeholder="Try: iPhone 16 128GB, HP laptop i5, Prestige cooker..." required>
+      <button id="searchBtn" type="submit">Search Live Prices</button>
+    </form>
+
+    {% if not live_enabled %}
+    <div class="setup-warning">
+      <strong>One-time setup:</strong> add your <code>SERPAPI_KEY</code> environment variable.
+      Until then, the app will not show fake/random prices.
+    </div>
+    {% endif %}
+  </section>
+
+  <section id="meta" class="meta hidden"></section>
+  <section id="summary" class="summary hidden"></section>
+  <section id="results" class="results"></section>
+</main>
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
